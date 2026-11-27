@@ -335,18 +335,19 @@ docker compose run --rm eval --set l05_dialogs_calib --gate all --profile lesson
 | D14-EMPTY | D14: повтор `get_transactions` на порожньому результаті (CUS-0003) | 1 | — | — | daily / 1 |
 | C07-IDENT | однакові виклики на C-07 (очікувано зелений на обох профілях) | 1 | — | — | daily / 1 |
 | H01-IDENT | однакові виклики на діалозі ДЗ4 CONV-H01 | 1 | — | — | daily / 1 |
-| C07-BUDGET | D15 на C-07 (7 кроків) | 1 | 68000 | 35000 | release / 5 |
-| H04-BUDGET | D15 на діалозі ДЗ4 CONV-H04 (7 кроків) | 1 | 58000 | 35000 | release / 5 |
-| H05-BUDGET | D15 на діалозі ДЗ4 CONV-H05 (7 кроків, CUS-0009, FX) | 1 | 61000 | 35000 | release / 5 |
+| C07-BUDGET | D15 на C-07 (7 кроків) | 1 | 68000 | 29000 | release / 5 |
+| H04-BUDGET | D15 на діалозі ДЗ4 CONV-H04 (7 кроків) | 1 | 58000 | 27000 | release / 5 |
+| H05-BUDGET | D15 на діалозі ДЗ4 CONV-H05 (7 кроків, CUS-0009, FX) | 1 | 61000 | 28500 | release / 5 |
 
 Пороги — від медіан clean по 5 прогонах (`sets/l05_dialogs_calib.jsonl`), знятих на
-`anthropic/claude-haiku-5.5`; на іншій моделі їх треба перезняти. `set_hash 763a40701c3c`.
+`anthropic/claude-haiku-5.5`; на іншій моделі їх треба перезняти. `latency_ms` = найбільша медіана часу clean із трьох серій × 1.20, округлена вгору до 500 мс. `set_hash 9e19b12e44f1`.
 
 ### Прогони
 | Що | Профіль / модель | Звіт |
 | --- | --- | --- |
-| набір l05_dialogs | clean, haiku 5.5 — 6/6 | reports/l05_dialogs-clean-20261126T101200.json |
-| набір l05_dialogs | lesson-08, haiku 5.5 — 2/6 (червоні D14-EMPTY, C07-BUDGET, H04-BUDGET, H05-BUDGET) | reports/l05_dialogs-lesson-08-20261126T100450.json |
+| набір l05_dialogs | clean, haiku 5.5 — 6/6 | reports/l05_dialogs-clean-20261127T152914.json |
+| набір l05_dialogs | lesson-08, haiku 5.5 — 2/6 (червоні D14-EMPTY, C07-BUDGET, H04-BUDGET, H05-BUDGET) | reports/l05_dialogs-lesson-08-20261127T152143.json |
+| той самий набір з `latency_ms` 35 000 (`set_hash 763a40701c3c`) | clean / lesson-08 | reports/l05_dialogs-clean-20261126T101200.json, reports/l05_dialogs-lesson-08-20261126T100450.json |
 | калібрування l05_dialogs_calib | clean / lesson-08, haiku 5.5 | reports/l05_dialogs_calib-clean-20261125T220441.json, reports/l05_dialogs_calib-lesson-08-20261125T221657.json |
 | попередня версія набору (`set_hash ba1abad5b7d9`, H01 з порогом токенів) | clean / lesson-08 | reports/l05_dialogs-clean-20261126T094602.json, reports/l05_dialogs-lesson-08-20261126T093703.json |
 | B4 | haiku 5.5, gemini 2.5 flash | l08/b4.json |

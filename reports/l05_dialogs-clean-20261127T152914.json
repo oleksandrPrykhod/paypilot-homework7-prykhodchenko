@@ -1,0 +1,213 @@
+{
+  "prompt_version": "base.v1",
+  "set_hash": "9e19b12e44f1",
+  "profile": "clean",
+  "judge_model": "not-used",
+  "rubric_version": "rubric.v1",
+  "elapsed": 393.2,
+  "set": "l05_dialogs",
+  "gate": "all",
+  "ran_at": "2026-11-27T15:29:14.482733+00:00",
+  "passed": 6,
+  "total": 6,
+  "skipped": 0,
+  "by_layer": {
+    "memory": {
+      "passed": 6,
+      "total": 6
+    }
+  },
+  "coverage": {
+    "cases": 6,
+    "layers": {
+      "memory": 6
+    },
+    "oracles": {
+      "human": 6
+    },
+    "sources": {
+      "L08 B1, CUS-0003 (ACC-1004 без транзакцій)": 1,
+      "L08 lab, C-07": 2,
+      "ДЗ4 CONV-H01": 1,
+      "ДЗ4 CONV-H04": 1,
+      "ДЗ4 CONV-H05": 1
+    },
+    "severities": {
+      "high": 4,
+      "medium": 2
+    },
+    "ladder_levels": [
+      2
+    ],
+    "gates": {
+      "daily": 3,
+      "release": 3
+    },
+    "human_oracle_pct": 100.0,
+    "severity_filled_pct": 100.0
+  },
+  "cases": [
+    {
+      "skipped": false,
+      "id": "D14-EMPTY",
+      "layer": "memory",
+      "oracle": "human",
+      "severity": "high",
+      "gate": "daily",
+      "runs": 1,
+      "verdict": {
+        "passed": true,
+        "level": 2,
+        "assertion": "budget",
+        "detail": "per run: tokens [11380], identical calls [1], latency [5043]ms"
+      },
+      "answers": [
+        "I checked account ACC-1004, and there are no transactions on record for it. The list came back empty, so I can't tell whether this reflects a data issue or simply no activity yet.\n\nIf you expect to see activity, I can escalate this to a human support agent to look into it. Is there anything else I can help you with?"
+      ],
+      "latency_ms": 5043,
+      "tokens": 5919,
+      "tool_calls": [
+        {
+          "name": "get_transactions",
+          "arguments": {
+            "account_id": "ACC-1004"
+          },
+          "result": {
+            "transactions": []
+          }
+        }
+      ]
+    },
+    {
+      "skipped": false,
+      "id": "C07-IDENT",
+      "layer": "memory",
+      "oracle": "human",
+      "severity": "medium",
+      "gate": "daily",
+      "runs": 1,
+      "verdict": {
+        "passed": true,
+        "level": 2,
+        "assertion": "budget",
+        "detail": "per run: tokens [59792], identical calls [1], latency [22956]ms"
+      },
+      "answers": [
+        "The dispute is open.\n\n- **Dispute ID:** 1\n- **Transaction:** TX-0401, 240.00 EUR to TechMart Online, 2026-07-20\n- **Reason:** duplicate_charge\n- **Status:** open\n\nYou'll receive a notification at each status change. If you want to withdraw the dispute, you can do so while it is open or under review, but a withdrawn dispute cannot be reopened for this transaction under the same reason code."
+      ],
+      "latency_ms": 22956,
+      "tokens": 12064,
+      "tool_calls": [
+        {
+          "name": "create_dispute",
+          "arguments": {
+            "transaction_id": "TX-0401",
+            "reason_code": "duplicate_charge",
+            "amount": 240,
+            "currency": "EUR"
+          },
+          "result": {
+            "dispute_id": 1,
+            "status": "open"
+          }
+        }
+      ]
+    },
+    {
+      "skipped": false,
+      "id": "C07-BUDGET",
+      "layer": "memory",
+      "oracle": "human",
+      "severity": "medium",
+      "gate": "release",
+      "runs": 5,
+      "verdict": {
+        "passed": true,
+        "level": 2,
+        "assertion": "budget",
+        "detail": "per run: tokens [67243, 59122, 59294, 52455, 58555], identical calls [1, 1, 1, 1, 1], latency [24927, 26098, 25843, 22293, 24352]ms"
+      },
+      "answers": [
+        "The duplicate_charge dispute for TX-0401 (EUR 240.00, TechMart Online, 2026-07-20) is now open. Dispute ID: **1**, status: **open**.\n\nNext steps:\n- Gather your order confirmations from TechMart Online for July 14 and July 20. You may be asked for them, and if you don't provide requested evidence within 7 calendar days, the case is declined.\n- If you want the card blocked while the case is reviewed",
+        "The dispute for TX-0401 is already open, so I haven't filed anything new. It's dispute ID 1, filed for the 240.00 EUR TechMart Online charge on 2026-07-20.\n\nIf you meant the July 14 charge (TX-0402), tell me and I'll check its eligibility under the duplicate-charge reason first. I'll only open that dispute after you confirm.",
+        "The dispute is already open, so I haven't filed another one. Dispute ID **1** for **TX-0401** (EUR 240.00, TechMart Online, 20 July 2026, duplicate charge) was opened earlier in this conversation and has status **open**.\n\nYour other charge, TX-0402 (EUR 240.00, 14 July), has no dispute. If you want to dispute it too, tell me and I'll check its eligibility first.",
+        "I've opened the dispute.\n\n- **Dispute ID:** 1\n- **Transaction:** TX-0401, TechMart Online, 2026-07-20\n- **Amount:** EUR 240.00\n- **Reason:** Duplicate charge\n- **Status:** Open\n\nPlease gather your TechMart order confirmations or receipts for both payments, and any emails about the second charge. If the case asks for evidence and you don't provide it within 7 calendar days, it will be declined.",
+        "Dispute 1 is already open for TX-0401 (EUR 240.00, TechMart Online, 20 July 2026), so I haven't opened a second one. Filing it again could create a duplicate case.\n\nIf you want to check its status, I can escalate to a human agent. Otherwise, you'll receive a notification on each status change."
+      ],
+      "latency_ms": 24352,
+      "tokens": 42918,
+      "tool_calls": []
+    },
+    {
+      "skipped": false,
+      "id": "H01-IDENT",
+      "layer": "memory",
+      "oracle": "human",
+      "severity": "high",
+      "gate": "daily",
+      "runs": 1,
+      "verdict": {
+        "passed": true,
+        "level": 2,
+        "assertion": "budget",
+        "detail": "per run: tokens [46426], identical calls [1], latency [21951]ms"
+      },
+      "answers": [
+        "Yes. As of today (2026-09-15), the eligibility check shows the window is open, with a deadline of **2026-10-18**, which leaves about 33 days.\n\nI still need your confirmation before I file. Reply **\"yes\"** to open the dispute for TX-0401 (EUR 240.00) under goods_not_received."
+      ],
+      "latency_ms": 21951,
+      "tokens": 5127,
+      "tool_calls": []
+    },
+    {
+      "skipped": false,
+      "id": "H04-BUDGET",
+      "layer": "memory",
+      "oracle": "human",
+      "severity": "high",
+      "gate": "release",
+      "runs": 5,
+      "verdict": {
+        "passed": true,
+        "level": 2,
+        "assertion": "budget",
+        "detail": "per run: tokens [50590, 45786, 76482, 56789, 50161], identical calls [1, 1, 1, 1, 1], latency [20761, 19428, 28959, 21803, 21123]ms"
+      },
+      "answers": [
+        "Yes. The eligibility check passed on 15 September 2026, and the deadline for TX-0401 is **18 October 2026**. That leaves about a month.\n\nI still need your explicit \"yes\" before I file, since the dispute can't be undone. Shall I open a **goods_not_received** dispute for **TX-0401 (240.00 EUR)** now?",
+        "Yes, but you no longer need to file. Dispute 1 for TX-0401 (EUR 240.00, goods_not_received) is already open. The window for this reason code runs until **2026-10-18**, so the deadline doesn't affect this case.",
+        "Yes, you still had time. The deadline for goods_not_received on TX-0401 was 18 October 2026, and the dispute is now open (Dispute ID 1), so you don't need to file anything else for this charge.\n\nI should correct my earlier suggestion about TX-0402, the second 240.00 EUR TechMart payment from 14 July. A duplicate_charge dispute has a 60-day window from the transaction date, which would have closed ",
+        "You don't need to file again. The dispute is already open (ID 1), so the filing deadline no longer matters for TX-0401.\n\nThe 18 October 2026 deadline applied to opening the dispute. Since it's open, your next priority is responding to any evidence request within 7 calendar days.",
+        "Yes. The eligibility check passed on 15 September 2026. The dispute window for TX-0401 closes on **18 October 2026**, so you have until then to file.\n\nFiling now is still your choice. Reply \"yes\" and I'll open the dispute for TX-0401 (EUR 240.00, goods_not_received)."
+      ],
+      "latency_ms": 21123,
+      "tokens": 30904,
+      "tool_calls": []
+    },
+    {
+      "skipped": false,
+      "id": "H05-BUDGET",
+      "layer": "memory",
+      "oracle": "human",
+      "severity": "high",
+      "gate": "release",
+      "runs": 5,
+      "verdict": {
+        "passed": true,
+        "level": 2,
+        "assertion": "budget",
+        "detail": "per run: tokens [55728, 54831, 43121, 59409, 50460], identical calls [1, 1, 1, 1, 1], latency [21284, 25093, 17615, 20489, 21177]ms"
+      },
+      "answers": [
+        "Not quite. The docs don't describe a partial split. The conversion guide says the free allowance covers a conversion only if the whole amount fits within the remaining monthly allowance. Once the allowance is used up, the full spread applies to the conversion.\n\nYour EUR 1,200 is more than the EUR 500 allowance, so the quote applies the 1.5% spread to the full amount. The docs don't say whether the",
+        "Based on the tariff schedule, no. The spread should apply only after the free monthly conversion allowance is used up. For tier 1, that allowance is EUR 500 per month, so the 1.5% should apply only to the EUR 700 above it.\n\nThe quote doesn't match that. It applied the 1.5% to the full EUR 1,200 and marked the allowance as not applied, with EUR 0 used so far. I should have pointed this out earlier ",
+        "Yes. The 1.5% spread applies to the whole conversion, not just the part above EUR 500.\n\nVerta's rule is that a conversion is free of spread only if the whole amount fits within the remaining monthly allowance. Your monthly allowance is EUR 500, and €1,200 is larger than that, so the spread applies to all €1,200. This also explains why the allowance was not applied to your quote. I should have made",
+        "Yes. Because EUR 1,200 is more than your EUR 500 monthly allowance, the 1.5% spread applies to the whole conversion, not only to the EUR 700 above the allowance. The allowance is used only when a whole conversion fits within the remaining amount.",
+        "Yes. Verta's rules apply the spread to the entire conversion when it crosses the free allowance boundary, not only to the portion above EUR 500. The quote confirms this: 1.5% of the full gross amount (USD 1,304.35) is USD 19.57."
+      ],
+      "latency_ms": 21177,
+      "tokens": 49596,
+      "tool_calls": []
+    }
+  ]
+}
